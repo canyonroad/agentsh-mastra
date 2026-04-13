@@ -33,7 +33,7 @@
     "example:modal": "npx tsx examples/modal.ts"
   },
   "dependencies": {
-    "@agentsh/secure-sandbox": "^0.4.0"
+    "@agentsh/secure-sandbox": "^0.4.1"
   },
   "peerDependencies": {
     "@mastra/core": ">=0.10.0",
