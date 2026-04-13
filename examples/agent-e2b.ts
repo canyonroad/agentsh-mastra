@@ -32,7 +32,10 @@ async function main() {
   console.log('Setting up AgentSH-secured tools...');
   const tools = agentshTools({
     policy: agentDefault(),
-    sandbox: { adapter: e2b(sandbox) },
+    sandbox: {
+      adapter: e2b(sandbox),
+      config: { skipIntegrityCheck: true },
+    },
   });
 
   console.log('Creating Mastra agent...');
