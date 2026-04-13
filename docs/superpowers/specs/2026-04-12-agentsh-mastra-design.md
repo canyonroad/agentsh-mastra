@@ -168,12 +168,13 @@ interface ExecResult {
 
 ### Local backend (Mode 2)
 
-Shells out to the `agentsh` CLI:
+Shells out to the `agentsh` CLI. Assumes the AgentSH server is already running (started externally, or auto-started by the shell shim on first command).
 
-1. On first tool call, creates a session: `agentsh session create --workspace <workspace> --policy <serialized>`
-2. Routes all commands through: `agentsh exec --output json <sessionId> -- bash -c <command>`
-3. Parses the JSON response envelope from AgentSH
-4. Assumes `agentsh` binary is on `$PATH`. Fails fast with a clear error if not found.
+1. On first tool call, serializes the policy to a temporary YAML file on disk (reuses `serializePolicy` from secure-sandbox)
+2. Creates a session: `agentsh session create --workspace <workspace> --policy <policy-name>`
+3. Routes all commands through: `agentsh exec --output json <sessionId> -- bash -c <command>`
+4. Parses the JSON response envelope from AgentSH
+5. Assumes `agentsh` binary is on `$PATH`. Fails fast with a clear error if not found.
 
 Session is created lazily (not at `agentshTools()` call time) so the factory call is synchronous.
 
