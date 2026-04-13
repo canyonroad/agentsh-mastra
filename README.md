@@ -37,7 +37,7 @@ AgentSH enforces security policies at the kernel level using seccomp and eBPF â€
 ## Install
 
 ```bash
-npm install @agentsh/mastra @agentsh/secure-sandbox @mastra/core zod
+npm install @agentsh/mastra @agentsh/secure-sandbox
 ```
 
 Then add your sandbox provider SDK:
