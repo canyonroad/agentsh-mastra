@@ -14,7 +14,7 @@ function execFile(
 ): Promise<{ stdout: string; stderr: string }> {
   return new Promise((resolve, reject) => {
     execFileCb(cmd, args, opts ?? {}, (err, stdout, stderr) => {
-      if (err) return reject(err);
+      if (err) return reject(Object.assign(err, { stderr }));
       resolve({ stdout: stdout as string, stderr: stderr as string });
     });
   });
@@ -22,6 +22,7 @@ function execFile(
 
 export class LocalBackend implements Backend {
   private sessionId: string | null = null;
+  private sessionPromise: Promise<string> | null = null;
   private readonly policy: PolicyDefinition;
   private readonly workspace: string;
 
@@ -30,7 +31,14 @@ export class LocalBackend implements Backend {
     this.workspace = workspace ?? '/workspace';
   }
 
-  private async ensureSession(): Promise<string> {
+  private ensureSession(): Promise<string> {
+    if (!this.sessionPromise) {
+      this.sessionPromise = this.initSession();
+    }
+    return this.sessionPromise;
+  }
+
+  private async initSession(): Promise<string> {
     if (this.sessionId) return this.sessionId;
 
     try {
