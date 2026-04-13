@@ -21,7 +21,11 @@
     "test:e2e:e2b": "vitest run --config vitest.e2e.config.ts e2e/e2b",
     "test:e2e:daytona": "vitest run --config vitest.e2e.config.ts e2e/daytona",
     "test:e2e:blaxel": "vitest run --config vitest.e2e.config.ts e2e/blaxel",
-    "example:agent": "npx tsx examples/agent-e2b.ts"
+    "test:e2e:vercel": "vitest run --config vitest.e2e.config.ts e2e/vercel",
+    "test:e2e:modal": "npx tsx e2e/modal-e2e-runner.ts",
+    "example:agent": "npx tsx examples/agent-e2b.ts",
+    "example:vercel": "npx tsx examples/vercel.ts",
+    "example:modal": "npx tsx examples/modal.ts"
   },
   "dependencies": {
     "@agentsh/secure-sandbox": "file:../secure-sandbox"
@@ -35,6 +39,7 @@
     "@blaxel/core": "^0.2.79",
     "@daytonaio/sdk": "^0.149.0",
     "@mastra/core": "^1.24.1",
+    "@vercel/sandbox": "^1.9.3",
     "dotenv": "^17.4.2",
     "e2b": "^2.19.0",
     "tsx": "^4.21.0",
