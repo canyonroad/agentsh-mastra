@@ -3,6 +3,7 @@ import { execFile as execFileCb } from 'node:child_process';
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { randomUUID } from 'node:crypto';
 import { serializePolicy } from '@agentsh/secure-sandbox/policies';
 import type { PolicyDefinition } from '@agentsh/secure-sandbox';
 import type { Backend, ExecResult, ReadFileResult, WriteFileResult } from '../types.js';
@@ -33,7 +34,10 @@ export class LocalBackend implements Backend {
 
   private ensureSession(): Promise<string> {
     if (!this.sessionPromise) {
-      this.sessionPromise = this.initSession();
+      this.sessionPromise = this.initSession().catch((err) => {
+        this.sessionPromise = null;
+        throw err;
+      });
     }
     return this.sessionPromise;
   }
@@ -51,7 +55,7 @@ export class LocalBackend implements Backend {
 
     const policyDir = join(tmpdir(), 'agentsh-mastra');
     mkdirSync(policyDir, { recursive: true });
-    const policyPath = join(policyDir, 'policy.yml');
+    const policyPath = join(policyDir, `policy-${randomUUID()}.yml`);
     writeFileSync(policyPath, serializePolicy(this.policy));
 
     const { stdout } = await execFile('agentsh', [

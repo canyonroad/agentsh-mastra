@@ -18,7 +18,10 @@ export class SandboxBackend implements Backend {
 
   private ensureInit(): Promise<SecuredSandbox> {
     if (!this.initPromise) {
-      this.initPromise = this.doInit();
+      this.initPromise = this.doInit().catch((err) => {
+        this.initPromise = null;
+        throw err;
+      });
     }
     return this.initPromise;
   }
