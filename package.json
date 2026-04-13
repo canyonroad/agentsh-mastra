@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "description": "AgentSH integration for MastraAI — secure, policy-enforced tools for Mastra agents",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/canyonroad/agentsh-mastra.git"
+  },
   "type": "module",
   "exports": {
     ".": {
