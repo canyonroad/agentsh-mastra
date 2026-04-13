@@ -37,10 +37,19 @@ AgentSH enforces security policies at the kernel level using seccomp and eBPF â€
 ## Install
 
 ```bash
-npm install @agentsh/mastra @agentsh/secure-sandbox
+npm install @agentsh/mastra @agentsh/secure-sandbox @mastra/core zod
 ```
 
-Peer dependencies: `@mastra/core` and `zod`.
+Then add your sandbox provider SDK:
+
+```bash
+# Pick one (or more):
+npm install e2b                 # E2B
+npm install @daytonaio/sdk      # Daytona
+npm install @vercel/sandbox     # Vercel
+npm install @blaxel/core        # Blaxel
+pip install modal               # Modal (Python SDK)
+```
 
 ## Quick Start
 
